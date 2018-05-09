@@ -29,7 +29,22 @@ class SignIn extends React.Component {
       username: this.state.username,
       password: this.state.password
     } 
-    console.log(userData);
+    this.userSignIn(userData)
+  }
+
+  userSignIn(userData) {
+    let url = `${location.origin}/signin`;
+    let params = {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    }
+    fetch(url, params)
+    // .then(res => res.json())
+    // .then(res)
   }
 
 

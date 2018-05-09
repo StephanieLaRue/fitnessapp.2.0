@@ -30,6 +30,22 @@ class RegisterUser extends React.Component {
       newPassword: this.state.newPassword
     } 
     console.log(userData);
+    this.userRegistration(userData)
+  }
+
+  userRegistration(userData) {
+    let url = `${location.origin}/register`;
+    let params = {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    }
+    fetch(url, params)
+    // .then(res => res.json())
+    // .then(res)
   }
 
 

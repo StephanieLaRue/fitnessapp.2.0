@@ -1,6 +1,6 @@
-let submit = document.getElementById('submitButton')
 
 function app() {
+  let submit = document.getElementById('submitButton')
   let workoutList = [];
 
   submit.onclick = function() {
@@ -14,7 +14,6 @@ function app() {
     let days = daySelect.options[daySelect.selectedIndex].value
 
     if(workSelect == 0 || length == 0 || days == 0) {
-      console.log('No data submitted');
       alert('Selections cannot be left blank.')
       return;
     }
@@ -47,7 +46,6 @@ function app() {
   function createDate() {
     let date = new Date();
     let day = date.getDate();
-    // day = day.length > 1 ? day : '0' + day;
 
     let month = date.getMonth();
     let matchMonth = [
@@ -60,11 +58,6 @@ function app() {
     let year = date.getFullYear();
     let displayDate = matchMonth[month]  + '/' + day + '/' + year;
     return displayDate;
-    // let div = document.createElement('div')
-    // let textDate = document.createTextNode(displayDate)
-    // div.appendChild(textDate)
-    // div.className = 'dateDiv'
-    // li.appendChild(div)
   }
 
   function resetSelectors() {
@@ -85,9 +78,8 @@ function app() {
 
   function generateList(data) {
     let ul = document.getElementById('dataList');
-     ul.innerHTML = ''
+    ul.innerHTML = ''
     data.forEach(function(ele, ind) {
-
       let li = document.createElement('li');
 
       let rem = document.createElement('button')
@@ -120,7 +112,6 @@ function app() {
 
   function addListItem(data) {
     data = data[0]
-    // ul.innerHTML = ''
     let ul = document.getElementById('dataList');
     let li = document.createElement('li');
 
@@ -170,15 +161,13 @@ function app() {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
-      // console.log('client-res:', data)
-      workoutList = data
+      workoutList = data  
       generateList(data)
     })
     .catch(error => console.error('Error GETTING Data:', error))
   }
 
   function makeReq(data) {
-
     let params = {
       method: 'post',
       headers: {
@@ -195,7 +184,6 @@ function app() {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
-      // console.log('client-res:', data)
       addListItem(data)
     })
     .catch(error => console.error('Error POSTING Data:', error))
@@ -211,9 +199,6 @@ function app() {
       },
       body: JSON.stringify(data)
     }
-
-    console.log(params.body);
-
     fetch(`${location.origin}/remove`, params)
     .then(res => res.json())
     .then(function(data) {
@@ -221,7 +206,6 @@ function app() {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
-      // console.log('client-res:', data)
       generateList(data)
     })
     .catch(error => console.error('Error REMOVING/GETTING Data:', error))
