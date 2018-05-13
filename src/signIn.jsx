@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import css from './react.css';
-
+import './react.css';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -43,8 +42,16 @@ class SignIn extends React.Component {
       body: JSON.stringify(userData)
     }
     fetch(url, params)
-    // .then(res => res.json())
-    // .then(res)
+    .then(function (res) {
+      if(res.data == 'successful') {
+        console.log('yes data');
+        
+        // window.location.assign('http://localhost:3000/profile')
+      }
+      else {
+        console.log('no data');     
+      }
+    })
   }
 
 

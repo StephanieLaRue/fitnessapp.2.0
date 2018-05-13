@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import css from './react.css';
-
+import './react.css';
 
 class RegisterUser extends React.Component {
   constructor(props) {

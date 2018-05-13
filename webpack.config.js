@@ -1,6 +1,7 @@
 'use strict'
 
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
@@ -14,10 +15,10 @@ module.exports = {
         rules: [
             {
               test: /\.css$/, 
-                use: ["style-loader", "css-loader", "sass-loader"]
+              use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
             },
             {
-              test: /.jsx?$/,
+              test: /\.jsx?$/,
               exclude: /node_modules/,
               use: {
                 loader: "babel-loader",
@@ -29,10 +30,17 @@ module.exports = {
             }   
         ]
     },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "style.css"
+      })
+    ],
   resolve: {
-    extensions: [".js", ".jsx", ".scss"]
+    extensions: [".js", ".jsx", ".scss", ".css"]
   },
   performance: {
     hints: false
-  }
+  },
+  mode: 'development'
+
 }

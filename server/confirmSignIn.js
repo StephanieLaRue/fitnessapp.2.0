@@ -34,18 +34,23 @@ module.exports = {
 		try {
 			let userData = {
 				user: req.body.username,
-				pass: req.body.password	
+				pass: req.body.password
 			}
 
 			let result = await matchUser(userData, db)
 			if(!result.length || !result) {
 				console.log(null);	
+				res.send('failure')
 				return;			
 			}
 			if(userData.user === result[0].user && userData.pass === result[0].pass) {
-				console.log('Success');  
+				console.log('Success');
+				res.send('successful')
+				return result[0].user; 
 			}
-			else {console.log('Failure')};    
+			else {
+				res.send('failure')
+			}    
 		}
 		catch(err) {
 			console.log(err.stack);
@@ -57,7 +62,7 @@ module.exports = {
 const matchUser = async function(userData, db) {
 	try {
 		let result = await db.collection('registeredusers').find({user: userData.user, pass: userData.pass}).toArray();
-		console.log(result);
+		console.log('matched result', result);
 		return result;
 	}
 	catch(err) {

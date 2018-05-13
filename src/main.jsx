@@ -4,8 +4,7 @@ import SignIn from './signIn.jsx';
 import RegisterUser from './registerUser.jsx'
 import {Button, Container, Nav} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import css from './react.css';
-
+import './react.css';
 
 function ToggleRegistration(props) {
 	if(!props.reg) {
