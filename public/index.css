@@ -1,35 +1,40 @@
 /*CONTAINERS*/
 
 #container {
-  background-color: rgb(206, 206, 210);
+  /* background-color: rgb(206, 206, 210); */
   width: 100%;
-  height:  350px;
+  height:  250px;
   margin: auto;
   border-radius: 3px;
-  text-align: center;
 }
 
 #logContainer {
-  background-color: rgb(103, 137, 179);
+  background-color: rgb(83, 121, 167);
   border-radius: 3px;
+}
+
+#con {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
 }
 
 #listContainer, #logContainer {
   padding: 0;
-  /*margin-top: 50px*/
 }
 
 #listContainer {
   overflow-y: scroll;
-  /*max-height: 200px;*/
+  background-color: rgb(206, 206, 210);
 }
 
 
 #h4 {
-  margin: 30px 0 40px;
+  margin: 30px 0 30px;
   color: rgb(68, 97, 134);
   background-color: #fff;
   font-weight: bold;
+  text-align: center;
 }
 
 
@@ -37,32 +42,50 @@
 
 #workout:hover, #workoutLength:hover, #days:hover  {
   cursor: pointer;
-  background-color: rgba(127, 127, 133);
 }
 
-#workout, #workoutLength, #days {
+#workout, #days, #workoutLength {
+  width: 100%;
   font-weight: bold;
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
+  color: #fff;
   background: url(./arrow.png) 95% / 15% no-repeat #eee;
-  background-position: right 5px center;
-  text-align: left;
-  padding: .375rem .75rem;
+  /* background-position: right 6px center; */
+  padding: .375rem 1.5rem;
   border: 1px solid transparent;
   background-color: #6c757d;
-  color: #fff;
   border-radius: 3px;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.dropdown, #submitButton {
-  margin: 20px auto;
+#days {
+  background: url(./arrow.png) 95% / 18% no-repeat #eee;
+  background-color: #6c757d;
+}
+
+#workoutLength {
+  padding: .375rem 2rem;
+}
+
+.dropdown {
+  margin: 10px auto;
+}
+
+#submitButton {
+  color: #3b3b3b;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
   display: block;
+  margin: 30px auto 15px;
+  width: 40%;
+  border: transparent;
+  
 }
 
 #submitButton:hover {
-  background-color: rgba(112, 222, 189, 1);
+  background-color: rgb(47, 184, 143);
   border: none;
   color: #fff;
   font-weight: bold;
@@ -71,7 +94,10 @@
 .remButton {
   background: none;
   border: 0;
-  float: right;
+  top: 0;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
   color: rgb(99, 99, 99);
   font-weight: bold;
   font-size: 25px;
@@ -80,7 +106,7 @@
 .remButton:hover {
   cursor: pointer;
   text-decoration: none;
-  color: rgb(173, 11, 16);
+  color: rgb(189, 8, 14);
 }
 
 
@@ -91,41 +117,38 @@
 }
 
 .list-group-item {
-  height: 90px;
+  height: 50px;
   font-weight: bold;
-  margin-top: 10px;
 }
-
-#span {
-  margin: 6px;
-}
-
-#span:nth-child(n+3):before {
-  content: "| "
-}
-
 
 #propDate {
   color: rgb(41, 53, 99);
   font-size: 15px;
   font-weight: normal;
-  width: 100px;
-  margin: auto;
-  margin-top: 5px;
-  display:block;
 }
 
-#propDate:before {
-  content: normal;
+#propDay {
+  color: rgb(19, 64, 148);
+  font-size: 20px;
 }
 
 
-/*MIS*/
-
-.opt {
-  padding: .25rem 1.5rem;
+#propLen, #propWorkout {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 18px;
 }
 
+#propWorkout {
+  /* font-weight: bold;  */
+  color: rgb(59, 59, 59) 
+ } 
+
+ #propLen, #propWorkout, #propDate, #propDay {
+   margin: 0 5px;
+ }
+
+/*MEDIA QUERYS*/
 
 @media (min-width: @screen-sm-min) {
   #container {

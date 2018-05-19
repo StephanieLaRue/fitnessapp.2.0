@@ -87,13 +87,17 @@ function app() {
       rem.appendChild(t)
       li.appendChild(rem)
       rem.className = "remButton";
+  
 
       for(let prop in ele) {
         let item = ele[prop]
         let span = document.createElement('span')
         let val = document.createTextNode(item)
         span.id = 'span'
-        prop === 'date' ? span.id = 'propDate' : ""
+        prop === 'date' ? span.id = 'propDate' : "";
+        prop === 'day' ? span.id = 'propDay' : "";
+        prop === 'workout' ? span.id = 'propWorkout' : "";
+        prop === 'length' ? span.id = 'propLen' : "";
         span.appendChild(val)
         li.appendChild(span)
       }
@@ -121,13 +125,17 @@ function app() {
     li.appendChild(rem)
     rem.className = "remButton";
 
+
     for(let prop in data) {
       let item = data[prop]
       let span = document.createElement('span')
 
       let val = document.createTextNode(item)
       span.id = 'span'
-      prop === 'date' ? span.id = 'propDate' : ""
+      prop === 'date' ? span.id = 'propDate' : "";
+      prop === 'day' ? span.id = 'propDay' : "";
+      prop === 'workout' ? span.id = 'propWorkout' : "";
+      prop === 'length' ? span.id = 'propLen' : "";
       span.appendChild(val)
       li.appendChild(span)
     }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fitness App</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class='container' id="container">
+    <div class='row'>
+      <div class='col-md-6' id='logContainer'>
+        <h4 id='h4'>Daily Fitness Log</h4>
+        <div id='con'>
+          <div class="dropdown">
+            <select id=days>
+              <option value='' selected disabled hidden>Select Day</option>
+              <option name='day' class="dropdown-item" value='Monday'>Monday</option>
+              <option name='day' class="dropdown-item" value='Tuesday'>Tuesday</option>
+              <option name='day' class="dropdown-item" value='Wednesday'>Wednesday</option>
+              <option name='day' class="dropdown-item" value='Thursday'>Thursday</option>
+              <option name='day' class="dropdown-item" value='Friday'>Friday</option>
+              <option name='day' class="dropdown-item" value='Saturday'>Saturday</option>
+              <option name='day' class="dropdown-item" value='Sunday'>Sunday</option>
+            </select>
+          </div>
+
+          <div class="dropdown">
+            <select id=workout>
+              <option value='' selected disabled hidden>Select Activity</option>
+              <option name='act' class="dropdown-item" value='Jog'>Jog</option>
+              <option name='act' class="dropdown-item" value='Interval Training'>Interval Training</option>
+              <option name='act' class="dropdown-item" value='Abs'>Abs</option>
+              <option name='act' class="dropdown-item" value='Leg Day'>Leg Day</option>
+              <option name='act' class="dropdown-item" value='Hike'>Hike</option>
+              <option name='act' class="dropdown-item" value='Biceps'>Biceps & Back</option>
+              <option name='act' class="dropdown-item" value='Chest & Triceps'>Chest & Triceps</option>
+              <option name='act' class="dropdown-item" value='Chest'>Chest</option>
+              <option name='act' class="dropdown-item" value='Back'>Back</option>
+              <option name='act' class="dropdown-item" value='Biceps'>Biceps</option>
+              <option name='act' class="dropdown-item" value='Swimming'>Swimming</option>
+              <option name='act' class="dropdown-item" value='Skateboarding'>Skateboarding</option>
+              <option name='act' class="dropdown-item" value='Biking'>Biking</option>
+            </select>
+          </div>
+
+          <div class="dropdown">
+            <select id=workoutLength>
+              <option value='' selected disabled hidden>Select Length</option>
+              <option name='length' class="dropdown-item" value='10 minutes'>10 minutes</option>
+              <option name='length' class="dropdown-item" value='15 minutes'>15 minutes</option>
+              <option name='length' class="dropdown-item" value='20 minutes'>20 minutes</option>
+              <option name='length' class="dropdown-item" value='30 minutes'>30 minutes</option>
+              <option name='length' class="dropdown-item" value='45 minutes'>45 minutes</option>
+              <option name='length' class="dropdown-item" value='1 hour'>1 hour</option>
+              <option name='length' class="dropdown-item" value='1 hr & 15 min'>1 hr & 15 min</option>
+              <option name='length' class="dropdown-item" value='1.5 hours'>1.5 hours</option>
+            </select>
+          </div>
+          
+        </div>
+        <button type='submit' class="btn btn-light" id='submitButton'>Submit</button>
+    </div>
+
+      <div class='col-md-6' id='listContainer'>
+        <ul id='dataList' class="list-group">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src='index.js'></script>
+</body>
+
+</html>

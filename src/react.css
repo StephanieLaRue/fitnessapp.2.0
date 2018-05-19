@@ -12,9 +12,8 @@
     width: 35%;
     height: 250px;
     margin: auto;
-    margin-top: 30px;
-    background-color: rgb(235, 235, 235);
-    
+    margin-top: 20px;
+    background-color: rgb(235, 235, 235);   
 }
 
 .toggleButton {
@@ -23,6 +22,28 @@
 }
 
 h3 {
-    color: rgb(77, 77, 77);
+    color: rgb(78, 78, 78);
     text-align: center;
+}
+
+.signinMessage {
+    color: rgba(177, 12, 12, 0.959);
+    position: absolute;
+}
+
+.registerMessage {
+    color: rgba(12, 177, 53, 0.959);
+    position: absolute;
+    width: 100px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.title {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    color: rgb(3, 176, 199);
+    margin-top: 20px;
+    font-weight: bold;
 }

@@ -22,15 +22,14 @@ class Main extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.toggle = this.toggle.bind(this)
-
 		this.state = {
 			toggleClick: false
 		}
+		
+		this.toggle = this.toggle.bind(this);
 	}
 
 	componentDidMount() {
-
 	}
 
 	toggle() {
@@ -42,12 +41,15 @@ class Main extends React.Component {
 
 	render() {
 		return(
+			<div>
+			<h1 className="title" >Fitness Log</h1>
 			<Container id="mainContainer">
 				<Button className="toggleButton btn-outline-info btn-sm" onClick={this.toggle}>
 					{this.state.toggleClick ? 'Login' : 'Register'}
 				</Button>
 				<ToggleRegistration reg={this.state.toggleClick}/>			
 			</Container>
+			</div>
 		) 
 	}
 }

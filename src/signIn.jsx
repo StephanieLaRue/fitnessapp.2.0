@@ -4,6 +4,16 @@ import {Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './react.css';
 
+function CheckLogin(props) {
+  if(!props.isLoggedIn) {
+    return null
+  }
+  return(
+    <h6 className="signinMessage">Please Register</h6>
+  ) 
+}
+
+
 class SignIn extends React.Component {
   constructor(props) {
       super(props)
@@ -13,7 +23,8 @@ class SignIn extends React.Component {
 
       this.state = {
           username: '',
-          password: ''
+          password: '',
+          userLogin: ''
       }
     }
 
@@ -42,26 +53,31 @@ class SignIn extends React.Component {
       body: JSON.stringify(userData)
     }
     fetch(url, params)
-    .then(function (res) {
-      if(res.data == 'successful') {
-        console.log('yes data');
-        
-        // window.location.assign('http://localhost:3000/profile')
+    .then((res) => res.text())
+    .then((data) => {
+      if(data == 'successful') {
+        window.location.assign('http://localhost:3000/profile')
       }
       else {
-        console.log('no data');     
-      }
+        this.setState({userLogin: true})
+      }    
     })
+    .catch((err) => {return err});
   }
 
 
+
   render() {
+    const {username, password} = this.state;
+    const isEnabled = username.length > 0 && password.length > 0;
+
     return (
         <div className="signIn">
+          <CheckLogin isLoggedIn={this.state.userLogin}/>
           <h3>Login</h3>
           <input type="text" placeholder="Username" className="input" id="username" value={this.state.username} id="usernameInput" name="username" onChange={this.handleChange}/>
           <input type="text" placeholder="Password" className="input" id="password" value={this.state.password} id="passwordInput" name="password" onChange={this.handleChange}/>
-          <Button className="submit" color="success" onClick={this.submitUserCredentials}>Submit</Button>
+          <Button disabled={!isEnabled} className="submit" color="success" onClick={this.submitUserCredentials}>Submit</Button>
         </div>
     )
   }

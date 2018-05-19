@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const port = 3000;
 const fitness = require('./mongo.js');
-const creds = require('./userCredentials.json')
 const credentials = require("./credentials.json")
 const MongoClient = require('mongodb').MongoClient
 const register = require('./registration');
@@ -34,22 +33,20 @@ module.exports = {
 		try {
 			let userData = {
 				user: req.body.username,
-				pass: req.body.password
+				pass: req.body.password,
 			}
 
 			let result = await matchUser(userData, db)
 			if(!result.length || !result) {
-				console.log(null);	
-				res.send('failure')
-				return;			
+				console.log('Username is:' + null);	
+				return {status: 'failure'};			
 			}
 			if(userData.user === result[0].user && userData.pass === result[0].pass) {
-				console.log('Success');
-				res.send('successful')
-				return result[0].user; 
+				console.log('USERNAME MATCHED');
+				return {name: result[0].user, status: 'successful', userProfile: result[0].profile}; 
 			}
 			else {
-				res.send('failure')
+				return {status: 'failure'};	
 			}    
 		}
 		catch(err) {
@@ -62,7 +59,7 @@ module.exports = {
 const matchUser = async function(userData, db) {
 	try {
 		let result = await db.collection('registeredusers').find({user: userData.user, pass: userData.pass}).toArray();
-		console.log('matched result', result);
+		console.log('matchUser result:', result);
 		return result;
 	}
 	catch(err) {

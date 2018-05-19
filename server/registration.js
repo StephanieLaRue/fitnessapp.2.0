@@ -5,8 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const port = 3000;
 const fitness = require('./mongo.js');
-const MongoClient = require('mongodb').MongoClient
-const creds = require('./userCredentials.json')
+const MongoClient = require('mongodb').MongoClient;
 const credentials = require("./credentials.json")
 const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
 const dbName = 'fitnessapp';
@@ -32,7 +31,8 @@ module.exports = {
 	registration: async function(req, res) {
 		try {
 			let body = req.body;
-			await insertDocs(body, db);
+      await insertDocs(body, db);
+      return {status: 'registered'}
 		}
 		catch(err) {
 			console.log("ERR:", err);
@@ -47,7 +47,7 @@ const insertDocs = async function(body, db) {
 		let newUser = {
 			user: body.newUsername,
       pass: body.newPassword,
-      profile: body.profile
+      profile: body.userProfile
 		}
     let result = await db.collection('registeredusers').insert(newUser)
     console.log('DATA INSERTED: ', result);

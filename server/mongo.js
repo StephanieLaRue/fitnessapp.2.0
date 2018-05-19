@@ -5,6 +5,9 @@ const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
 const path = require('path')
 const credentials = require("./credentials.json")
+const session = require('express-session')
+let sessions;
+app.get(session({secret: 'userlogin'}));
 
 const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
 const dbName = 'fitnessapp';
@@ -26,7 +29,7 @@ let connectToDb = async function() {
 
 module.exports = {
 
-  login: async function(req, res) {
+  insert: async function(req, res) {
     try {
       let body = req.body;
       let result = await insertDocs(body, db);
@@ -43,7 +46,7 @@ module.exports = {
   },
   view: async function(req, res) {
     try {
-      let query = {};
+      let query = {user: "test" };
       let data = await asyncgetData(query, db);
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(data)
@@ -73,7 +76,7 @@ module.exports = {
 
 const asyncgetData = async function(query, db) {
   try {
-    return await db.collection('inputs').find(query, {'projection': { _id: 0} }).toArray()
+    return await db.collection('registeredusers').find(query, {'projection': { _id: 0} }).toArray()
   }
   catch(err) {
     console.log(err.stack);
