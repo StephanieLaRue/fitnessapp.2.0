@@ -9019,6 +9019,14 @@ h3 {
     margin-top: 5px;
 }
 
+.existsMessage {
+    color: rgba(177, 12, 12, 0.959);
+    position: absolute;
+    width: 100px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
 .title {
     text-align: center;
     width: 50%;
@@ -9028,3 +9036,6 @@ h3 {
     font-weight: bold;
 }
 
+.p {
+    font-size: 10px;
+}

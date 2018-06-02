@@ -18,14 +18,12 @@ app.use(bodyparser.urlencoded({
 }));
 
 
-
 app.post('/signin', async(req, res) => {
   sessions = req.session;
   let result = await confirmSignIn.confirmCredentials(req, res)
-  console.log('profile', result.userProfile);
-  
   if(result.name) {
     sessions.username = result.name;
+    sessions.profile = result.userProfile
     console.log('session user: ', sessions);
   }
   res.send(result.status);
@@ -33,7 +31,6 @@ app.post('/signin', async(req, res) => {
 
 app.get('/profile', function(req, res) {
   if(sessions && sessions.username) {
-
     res.sendFile(path.join(__dirname, '../public', 'profile.html'))   
   }
   else {
@@ -48,10 +45,13 @@ app.post('/register', async(req, res) => {
   res.send(result);
 });
 
-app.get('/view', async(req, res) => {
-  await fitness.view(req, res)
-  
-});
+
+app.get('/view', function(req, res) {
+  let body = sessions.username;
+  req.body = body;
+  fitness.view(req, res)
+})
+
 
 app.post('/form', async(req, res) => await fitness.insert(req, res));
 app.post('/remove', async(req, res) => await fitness.remove(req, res));

@@ -5,9 +5,6 @@ const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
 const path = require('path')
 const credentials = require("./credentials.json")
-const session = require('express-session')
-let sessions;
-app.get(session({secret: 'userlogin'}));
 
 const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
 const dbName = 'fitnessapp';
@@ -46,8 +43,11 @@ module.exports = {
   },
   view: async function(req, res) {
     try {
-      let query = {user: "test" };
+      let query = {user: req.body};
       let data = await asyncgetData(query, db);
+      data = data[0].user;
+      console.log('d', data);
+          
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(data)
       res.send(json)
