@@ -42,10 +42,10 @@ class Main extends React.Component {
 	render() {
 		return(
 			<div>
-			<h1 className="title" >Fitness Log</h1>
+			<h1 className="title" >Fitness Tracker</h1>
 			<Container id="mainContainer">
 				<Button className="toggleButton btn-outline-info btn-sm" onClick={this.toggle}>
-					{this.state.toggleClick ? 'Login' : 'Register'}
+					{this.state.toggleClick ? 'Sign In' : 'Register'}
 				</Button>
 				<ToggleRegistration reg={this.state.toggleClick}/>			
 			</Container>

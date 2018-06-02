@@ -45,6 +45,10 @@ module.exports = {
 				console.log('USERNAME MATCHED');
 				return {name: result[0].user, status: 'successful', userProfile: result[0].profile}; 
 			}
+			if(userData.user === result[0].user && userData.pass !== result[0].pass) {
+				console.log('Invalid Entry');			
+				return {status: 'invalidEntry'}
+			}
 			else {
 				return {status: 'failure'};	
 			}    
@@ -58,7 +62,7 @@ module.exports = {
 
 const matchUser = async function(userData, db) {
 	try {
-		let result = await db.collection('registeredusers').find({user: userData.user, pass: userData.pass}).toArray();
+		let result = await db.collection('registeredusers').find({user: userData.user}).toArray();
 		console.log('matchUser result:', result);
 		return result;
 	}

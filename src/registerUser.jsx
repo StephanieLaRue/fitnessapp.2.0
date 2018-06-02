@@ -119,7 +119,7 @@ class RegisterUser extends React.Component {
           <input type="text" placeholder="Create Username" className="input" id="newuser" value={this.state.newUsername} name="newUsername" onChange={this.handleChange}/>
           <input type="text" placeholder="Create Password" className="input" if="newpass" value={this.state.newPassword} name="newPassword" onChange={this.handleChange}/>
           <Button disabled={!isEnabled} disabled={!this.state.formValid} className="submit" color="success" onClick={this.createUserCredentials} >Submit</Button>
-          {/* <p className="p" >Password must contain at least 6 characters of letters and numbers</p> */}
+          <p className="validPass" >Password must contain at least 6 characters of letters and numbers</p>
         </div>
     )
   }
