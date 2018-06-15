@@ -114,41 +114,40 @@ function app() {
   }
 
   function addListItem(data) {
-    data = data[0]
+
     let ul = document.getElementById('dataList');
-    let li = document.createElement('li');
 
-    let rem = document.createElement('button')
-    let t = document.createTextNode('x')
-    rem.appendChild(t)
-    li.appendChild(rem)
-    rem.className = "remButton";
+    data.forEach(function(ele, ind) {
+      let li = document.createElement('li');
 
+      let rem = document.createElement('button')
+      let t = document.createTextNode('x')
+      rem.appendChild(t)
+      li.appendChild(rem)
+      rem.className = "remButton";
 
-    for(let prop in data) {
-      let item = data[prop]
-      let span = document.createElement('span')
-
-      let val = document.createTextNode(item)
-      span.id = 'span'
-      prop === 'date' ? span.id = 'propDate' : "";
-      prop === 'day' ? span.id = 'propDay' : "";
-      prop === 'workout' ? span.id = 'propWorkout' : "";
-      prop === 'length' ? span.id = 'propLen' : "";
-      span.appendChild(val)
-      li.appendChild(span)
-    }
+      for(let prop in ele) {
+        let item = ele[prop]
+        let span = document.createElement('span')
+        let val = document.createTextNode(item)
+        span.id = 'span'
+        prop === 'date' ? span.id = 'propDate' : ""
+        span.appendChild(val)
+        li.appendChild(span)
+      }
 
     ul.appendChild(li)
     li.className = 'listItem'
     li.className = "list-group-item"
 
-    workoutList.push(data)
-    rem.onclick = function() {
-      let removeItem = workoutList[workoutList.length - 1]
-      removeListItems(removeItem)
-      workoutList.splice(workoutList.length - 1, 1)
-    }
+    // workoutList.push(data)
+    // rem.onclick = function() {
+    //   let removeItem = workoutList[workoutList.length - 1]
+    //   removeListItems(removeItem)
+    //   workoutList.splice(workoutList.length - 1, 1)
+    // }
+
+    })
   }
 
 
@@ -184,14 +183,16 @@ function app() {
       body: JSON.stringify(data)
     }
 
-    fetch(`${location.origin}/form`, params)
+    fetch(`${location.origin}/update`, params)
     .then(res => res.json())
     .then(function(data) {
+      console.log('the data', data);
+      
       if(data.status === false) {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
-      addListItem(data[0].profile)
+      addListItem(data)
     })
     .catch(error => console.error('Error POSTING Data:', error))
   }

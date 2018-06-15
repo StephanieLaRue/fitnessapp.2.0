@@ -35,11 +35,11 @@ module.exports = {
 				user: req.body.username,
 				pass: req.body.password,
 			}
-
+			
 			let result = await matchUser(userData, db)
 			if(!result.length || !result) {
 				console.log('Username is:' + null);	
-				return {status: 'failure'};			
+				return {status: 'invalidEntry'}		
 			}
 			if(userData.user === result[0].user && userData.pass === result[0].pass) {
 				console.log('USERNAME MATCHED');
@@ -50,7 +50,7 @@ module.exports = {
 				return {status: 'invalidEntry'}
 			}
 			else {
-				return {status: 'failure'};	
+				return {status: 'invalidEntry'}	
 			}    
 		}
 		catch(err) {

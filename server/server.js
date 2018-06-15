@@ -53,7 +53,11 @@ app.get('/view', function(req, res) {
 })
 
 
-app.post('/form', async(req, res) => await fitness.insert(req, res));
+app.post('/update', async(req, res) => {
+  let result = await fitness.update(req, res)
+  res.send(result)
+});
+
 app.post('/remove', async(req, res) => await fitness.remove(req, res));
 
 app.listen(port, () => console.log(`Express server listening on port ${port}...`));

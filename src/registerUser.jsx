@@ -36,7 +36,6 @@ class RegisterUser extends React.Component {
         newUsername: '',
         newPassword: '',
         newUser: '',
-        userProfile: '',
         passLength: false,
         passwordValid: false,
         formValid: false,
@@ -75,8 +74,7 @@ class RegisterUser extends React.Component {
   createUserCredentials() {
     let userData = {
       newUsername: this.state.newUsername,
-      newPassword: this.state.newPassword,
-      userProfile: this.state.userProfile
+      newPassword: this.state.newPassword
     } 
     this.userRegistration(userData)
   }

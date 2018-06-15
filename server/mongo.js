@@ -11,6 +11,7 @@ const dbName = 'fitnessapp';
 
 let db;
 let client;
+let user;
 
 let connectToDb = async function() {
   try {
@@ -26,14 +27,19 @@ let connectToDb = async function() {
 
 module.exports = {
 
-  insert: async function(req, res) {
+  update: async function(req, res) {
     try {
       let body = req.body;
-      let result = await insertDocs(body, db);
-      let query = result.ops[0];
-      let data = await asyncgetData(query, db);
+      let result = await updateDocs(body, db);
+      let data = await asyncgetData({user}, db);
+      
+      let profile;
+      data.forEach((ele) => {
+        profile = ele
+      })
+
       res.set('Content-Type', 'application/json')
-      let json = JSON.stringify(data)
+      let json = JSON.stringify(profile.profile)
       res.send(json)
     }
     catch(err) {
@@ -45,9 +51,8 @@ module.exports = {
     try {
       let query = {user: req.body};
       let data = await asyncgetData(query, db);
-      data = data[0].user;
-      console.log('d', data);
-          
+      user = data;    
+      
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(data)
       res.send(json)
@@ -76,7 +81,7 @@ module.exports = {
 
 const asyncgetData = async function(query, db) {
   try {
-    return await db.collection('registeredusers').find(query, {'projection': { _id: 0} }).toArray()
+    return await db.collection('registeredusers').find(query).toArray()
   }
   catch(err) {
     console.log(err.stack);
@@ -85,10 +90,22 @@ const asyncgetData = async function(query, db) {
   }
 }
 
-const insertDocs = async function(data, db) {
+// const getProfile = async function(query, db) {
+//   try {
+//     return await db.collection('registeredusers').find(query).toArray()
+//   }
+//   catch(err) {
+//     console.log(err.stack);
+//     console.log('Error finding collection...');
+//     return err;
+//   }
+// }
+
+
+const updateDocs = async function(data, db) {
   try {
-    let result = await db.collection('inputs').insert(data)
-    console.log('DATA INSERTED: ', result);
+    let result = await db.collection('registeredusers').update({user}, {$addToSet: {"profile": data}}, {upsert: true})
+    // WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
     return result;
   }
   catch(err) {

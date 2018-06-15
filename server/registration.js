@@ -50,8 +50,7 @@ const insertDocs = async function(body, db) {
   try {
 		let newUser = {
 			user: body.newUsername,
-      pass: body.newPassword,
-      profile: body.userProfile
+      pass: body.newPassword
 		}
     let result = await db.collection('registeredusers').insert(newUser)
     console.log('DATA INSERTED: ', result);
