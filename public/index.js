@@ -2,6 +2,7 @@
 function app() {
   let submit = document.getElementById('submitButton')
   let workoutList = [];
+  
 
   submit.onclick = function() {
     let work = document.getElementById('workout')
@@ -78,44 +79,6 @@ function app() {
 
   function generateList(data) {
     let ul = document.getElementById('dataList');
-    let li = document.createElement('li');
-
-    let rem = document.createElement('button')
-    let t = document.createTextNode('x')
-    rem.appendChild(t)
-    li.appendChild(rem)
-    rem.className = "remButton";
-
-
-    for(let prop in data) {
-      let item = data[prop]
-      let span = document.createElement('span')
-
-      let val = document.createTextNode(item)
-      span.id = 'span'
-      prop === 'date' ? span.id = 'propDate' : "";
-      prop === 'day' ? span.id = 'propDay' : "";
-      prop === 'workout' ? span.id = 'propWorkout' : "";
-      prop === 'length' ? span.id = 'propLen' : "";
-      span.appendChild(val)
-      li.appendChild(span)
-    }
-
-    ul.appendChild(li)
-    li.className = 'listItem'
-    li.className = "list-group-item"
-
-    // workoutList.push(data)
-    rem.onclick = function() {
-      let removeItem = workoutList[workoutList.length - 1]
-      removeListItems(removeItem)
-      workoutList.splice(workoutList.length - 1, 1)
-    }
-  }
-
-  function addListItem(data) {
-
-    let ul = document.getElementById('dataList');
 
     data.forEach(function(ele, ind) {
       let li = document.createElement('li');
@@ -140,14 +103,47 @@ function app() {
     li.className = 'listItem'
     li.className = "list-group-item"
 
-    // workoutList.push(data)
-    // rem.onclick = function() {
-    //   let removeItem = workoutList[workoutList.length - 1]
-    //   removeListItems(removeItem)
-    //   workoutList.splice(workoutList.length - 1, 1)
-    // }
-
+    rem.onclick = function() {
+      let removeItem = workoutList[workoutList.length - 1]
+      removeListItems(removeItem)
+      workoutList.splice(workoutList.length - 1, 1)
+    }
     })
+    console.log('wo', workoutList);
+  }
+
+  function addListItem(data) {
+
+    let ul = document.getElementById('dataList');
+
+      let li = document.createElement('li');
+
+      let rem = document.createElement('button')
+      let t = document.createTextNode('x')
+      rem.appendChild(t)
+      li.appendChild(rem)
+      rem.className = "remButton";
+
+      for(let prop in data) {
+        let item = data[prop]
+        let span = document.createElement('span')
+        let val = document.createTextNode(item)
+        span.id = 'span'
+        prop === 'date' ? span.id = 'propDate' : ""
+        span.appendChild(val)
+        li.appendChild(span)
+      }
+
+    ul.appendChild(li)
+    li.className = 'listItem'
+    li.className = "list-group-item"
+
+    workoutList.push(data)
+    rem.onclick = function() {
+      let removeItem = workoutList[workoutList.length - 1]
+      removeListItems(removeItem)
+      workoutList.splice(workoutList.length - 1, 1)
+    }
   }
 
 

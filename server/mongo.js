@@ -31,15 +31,14 @@ module.exports = {
     try {
       let body = req.body;
       let result = await updateDocs(body, db);
-      let data = await asyncgetData({user}, db);
-      
-      let profile;
-      data.forEach((ele) => {
-        profile = ele
-      })
+
+      let data = await asyncgetData({user: user.user}, db);
+      user = data[0];
+      let userProfile = user.profile;
+      userProfile = userProfile.slice(-1)[0]
 
       res.set('Content-Type', 'application/json')
-      let json = JSON.stringify(profile.profile)
+      let json = JSON.stringify(userProfile)
       res.send(json)
     }
     catch(err) {
@@ -51,10 +50,11 @@ module.exports = {
     try {
       let query = {user: req.body};
       let data = await asyncgetData(query, db);
-      user = data;    
+      user = data[0];
+      let userProfile = user.profile
       
       res.set('Content-Type', 'application/json')
-      let json = JSON.stringify(data)
+      let json = JSON.stringify(userProfile)
       res.send(json)
     }
     catch(err) {
@@ -90,22 +90,10 @@ const asyncgetData = async function(query, db) {
   }
 }
 
-// const getProfile = async function(query, db) {
-//   try {
-//     return await db.collection('registeredusers').find(query).toArray()
-//   }
-//   catch(err) {
-//     console.log(err.stack);
-//     console.log('Error finding collection...');
-//     return err;
-//   }
-// }
-
 
 const updateDocs = async function(data, db) {
   try {
-    let result = await db.collection('registeredusers').update({user}, {$addToSet: {"profile": data}}, {upsert: true})
-    // WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+    let result = await db.collection('registeredusers').findOneAndUpdate(user, {$addToSet: {"profile": data}} )
     return result;
   }
   catch(err) {
