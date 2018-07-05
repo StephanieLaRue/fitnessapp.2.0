@@ -132,15 +132,18 @@ function app() {
     }
 
       ul.appendChild(li)
-      li.className = 'listItem'
-      li.className = "list-group-item"
+      li.className = 'listItem';
+      li.className = "list-group-item";
+      
+    workoutList.forEach((ele, ind) => {
+      rem.onclick = function() {
+        workoutList.splice(ind, 1)
+        removeListItems(workoutList)
+        li.parentNode.removeChild(li);
+      }
+    })
 
-    // workoutList.push(data)
-    rem.onclick = function() {
-      // workoutList.splice(ind, 1)
-      // removeListItems(workoutList)
-      // li.parentNode.removeChild(li);
-    }
+
   }
 
 
