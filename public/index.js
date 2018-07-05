@@ -99,40 +99,38 @@ function app() {
         li.appendChild(span)
       }
 
-    ul.appendChild(li)
-    li.className = 'listItem'
-    li.className = "list-group-item"
+      ul.appendChild(li)
+      li.className = 'listItem'
+      li.className = "list-group-item"
 
-    rem.onclick = function() {
-      let removeItem = workoutList[workoutList.length - 1]
-      removeListItems(removeItem)
-      workoutList.splice(workoutList.length - 1, 1)
-    }
+      rem.onclick = function() {
+        workoutList.splice(ind, 1)
+        removeListItems(workoutList)
+
+      }
     })
-    console.log('wo', workoutList);
   }
 
   function addListItem(data) {
-
+  
     let ul = document.getElementById('dataList');
+    let li = document.createElement('li');
 
-      let li = document.createElement('li');
+    let rem = document.createElement('button')
+    let t = document.createTextNode('x')
+    rem.appendChild(t)
+    li.appendChild(rem)
+    rem.className = "remButton";
 
-      let rem = document.createElement('button')
-      let t = document.createTextNode('x')
-      rem.appendChild(t)
-      li.appendChild(rem)
-      rem.className = "remButton";
-
-      for(let prop in data) {
-        let item = data[prop]
-        let span = document.createElement('span')
-        let val = document.createTextNode(item)
-        span.id = 'span'
-        prop === 'date' ? span.id = 'propDate' : ""
-        span.appendChild(val)
-        li.appendChild(span)
-      }
+    for(let prop in data) {
+      let item = data[prop]
+      let span = document.createElement('span')
+      let val = document.createTextNode(item)
+      span.id = 'span'
+      prop === 'date' ? span.id = 'propDate' : ""
+      span.appendChild(val)
+      li.appendChild(span)
+    }
 
     ul.appendChild(li)
     li.className = 'listItem'
@@ -170,6 +168,7 @@ function app() {
   }
 
   function makeReq(data) {
+    
     let params = {
       method: 'post',
       headers: {
@@ -182,12 +181,13 @@ function app() {
     fetch(`${location.origin}/update`, params)
     .then(res => res.json())
     .then(function(data) {
-      console.log('the data', data);
+      console.log('c re', data);
       
       if(data.status === false) {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
+      workoutList = data;  
       addListItem(data)
     })
     .catch(error => console.error('Error POSTING Data:', error))
@@ -206,11 +206,12 @@ function app() {
     fetch(`${location.origin}/remove`, params)
     .then(res => res.json())
     .then(function(data) {
+      console.log('the data', data);
       if(data.status === false) {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
-      generateList(data)
+      // generateList(data)
     })
     .catch(error => console.error('Error REMOVING/GETTING Data:', error))
   }

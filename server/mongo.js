@@ -35,7 +35,6 @@ module.exports = {
       let data = await asyncgetData({user: user.user}, db);
       user = data[0];
       let userProfile = user.profile;
-      userProfile = userProfile.slice(-1)[0]
 
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(userProfile)
@@ -62,14 +61,18 @@ module.exports = {
       return err;
     }
   },
+
   remove: async function(req, res) {
     let body = req.body;
     try {
-      let result = await removeData(body, db)
-      let query = {}
-      let data = await asyncgetData(query, db);
+      let result = await removeData(body, db)   
+      let data = await asyncgetData({user: user.user}, db);
+      
+      user = data[0];
+      let userProfile = user.profile
+
       res.set('Content-Type', 'application/json')
-      let json = JSON.stringify(data)
+      let json = JSON.stringify(userProfile)
       res.send(json)
     }
     catch(err) {
@@ -105,8 +108,8 @@ const updateDocs = async function(data, db) {
 
 const removeData = async function(data, db) {
   try {
-    let result = await db.collection('inputs').deleteOne(data)
-    console.log('DATA REMOVED: ', result);
+    let result = await db.collection('registeredusers').findOneAndUpdate(user, {$set: {"profile": data} })
+    console.log('NEW OBJECT: ', result);
     return result;
   }
   catch(err) {
