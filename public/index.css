@@ -11,6 +11,7 @@
 #logContainer {
   background-color: rgb(83, 121, 167);
   border-radius: 3px;
+  max-height: 250px;
 }
 
 #con {
@@ -25,6 +26,7 @@
 
 #listContainer {
   overflow-y: scroll;
+  max-height: 250px;
   background-color: rgb(206, 206, 210);
 }
 
@@ -119,6 +121,7 @@
 .list-group-item {
   height: 50px;
   font-weight: bold;
+  margin: 10px 0;
 }
 
 #propDate {

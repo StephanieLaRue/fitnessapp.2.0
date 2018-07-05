@@ -54,8 +54,7 @@ app.get('/view', function(req, res) {
 
 
 app.post('/update', async(req, res) => {
-  let result = await fitness.update(req, res)
-  
+  let result = await fitness.update(req, res)  
   res.send(result)
 });
 
