@@ -25,7 +25,6 @@ class SignIn extends React.Component {
       this.state = {
           username: '',
           password: '',
-          // userLogin: '',
           invalidEntry: false
       }
     }

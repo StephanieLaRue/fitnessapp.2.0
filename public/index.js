@@ -37,9 +37,10 @@ function app() {
 
     let obj = {
       day: days,
+      date: date,    
       workout: workSelect,
       length: length,
-      date: date
+      
     }
     return obj;
   }
@@ -94,7 +95,10 @@ function app() {
         let span = document.createElement('span')
         let val = document.createTextNode(item)
         span.id = 'span'
-        prop === 'date' ? span.id = 'propDate' : ""
+        prop === 'date' ? span.id = 'propDate' : "";
+        prop === 'day' ? span.id = 'propDay' : "";
+        prop === 'workout' ? span.id = 'propWorkout' : "";
+        prop === 'length' ? span.id = 'propLen' : "";
         span.appendChild(val)
         li.appendChild(span)
       }
@@ -126,7 +130,10 @@ function app() {
       let span = document.createElement('span')
       let val = document.createTextNode(item)
       span.id = 'span'
-      prop === 'date' ? span.id = 'propDate' : ""
+      prop === 'date' ? span.id = 'propDate' : "";
+      prop === 'day' ? span.id = 'propDay' : "";
+      prop === 'workout' ? span.id = 'propWorkout' : "";
+      prop === 'length' ? span.id = 'propLen' : "";
       span.appendChild(val)
       li.appendChild(span)
     }
