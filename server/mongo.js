@@ -6,7 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const credentials = require("./credentials.json")
 
-const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
+const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017`
 const dbName = 'fitnessapp';
 
 let db;

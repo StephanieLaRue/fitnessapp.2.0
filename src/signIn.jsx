@@ -44,9 +44,10 @@ class SignIn extends React.Component {
   }
 
   userSignIn(userData) {
-    let url = `${location.origin}/signin`;
+    let url = `${location.origin}/api/fitness/signin`;
+    
     let params = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -57,7 +58,8 @@ class SignIn extends React.Component {
     .then((res) => res.text())
     .then((data) => {
       if(data == 'successful') {
-        window.location.assign('http://localhost:3000/profile')
+        let origin = location.pathname.replace('/index.html', '/profile.html')
+        window.location.assign(`${origin}`)
       }
       if(data == 'invalidEntry') {
         console.log('invalid client entry');
@@ -71,7 +73,7 @@ class SignIn extends React.Component {
   render() {
     const {username, password} = this.state;
     const isEnabled = username.length > 0 && password.length > 0;
-
+    
     return (
         <div className="signIn">
           <CheckEntry invalid={this.state.invalidEntry} />

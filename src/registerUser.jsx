@@ -80,7 +80,7 @@ class RegisterUser extends React.Component {
   }
 
   userRegistration(userData) {
-    let url = `${location.origin}/register`;
+    let url = `${location.origin}/api/fitness/register`;
     let params = {
       method: 'post',
       headers: {

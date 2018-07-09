@@ -8,7 +8,7 @@ const fitness = require('./mongo.js');
 const credentials = require("./credentials.json")
 const MongoClient = require('mongodb').MongoClient
 const register = require('./registration');
-const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
+const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017`
 const dbName = 'fitnessapp';
 
 

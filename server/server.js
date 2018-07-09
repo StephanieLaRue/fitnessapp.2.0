@@ -18,7 +18,7 @@ app.use(bodyparser.urlencoded({
 }));
 
 
-app.post('/signin', async(req, res) => {
+app.post('/api/fitness/signin', async(req, res) => {
   sessions = req.session;
   let result = await confirmSignIn.confirmCredentials(req, res)
   if(result.name) {
@@ -29,7 +29,7 @@ app.post('/signin', async(req, res) => {
   res.send(result.status);
 });
 
-app.get('/profile', function(req, res) {
+app.get('/api/fitness/profile', function(req, res) {
   if(sessions && sessions.username) {
     res.sendFile(path.join(__dirname, '../public', 'profile.html'))   
   }
@@ -38,7 +38,7 @@ app.get('/profile', function(req, res) {
   }
 })
 
-app.post('/register', async(req, res) => {
+app.post('/api/fitness/register', async(req, res) => {
   let result = await register.registration(req, res)
   console.log(result.status);
   result = result.status;
@@ -46,19 +46,19 @@ app.post('/register', async(req, res) => {
 });
 
 
-app.get('/view', function(req, res) {
+app.get('/api/fitness/view', function(req, res) {
   let body = sessions.username;
   req.body = body;
   fitness.view(req, res)
 })
 
 
-app.post('/update', async(req, res) => {
+app.post('/api/fitness/update', async(req, res) => {
   let result = await fitness.update(req, res)  
   res.send(result)
 });
 
-app.post('/remove', async(req, res) => {
+app.post('/api/fitness/remove', async(req, res) => {
   let result = await fitness.remove(req, res); 
   res.send(result)
 });
