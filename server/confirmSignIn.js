@@ -8,9 +8,8 @@ const fitness = require('./mongo.js');
 const credentials = require("./credentials.json")
 const MongoClient = require('mongodb').MongoClient
 const register = require('./registration');
-const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017`
+const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
 const dbName = 'fitnessapp';
-
 
 let db;
 let client;
@@ -42,7 +41,7 @@ module.exports = {
 				return {status: 'invalidEntry'}		
 			}
 			if(userData.user === result[0].user && userData.pass === result[0].pass) {
-				console.log('USERNAME MATCHED');
+				console.log('USERNAME MATCHED');				  
 				return {name: result[0].user, status: 'successful', userProfile: result[0].profile}; 
 			}
 			if(userData.user === result[0].user && userData.pass !== result[0].pass) {
