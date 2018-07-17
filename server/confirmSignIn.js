@@ -1,15 +1,12 @@
-const express = require('express')
-const app = express()
-const bodyparser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
-const port = 3000;
-const fitness = require('./mongo.js');
 const credentials = require("./credentials.json")
-const MongoClient = require('mongodb').MongoClient
-const register = require('./registration');
+const MongoClient = require('mongodb').MongoClient;
 const url = `mongodb://${credentials.mongoUser}:${credentials.mongoPass}@127.0.0.1:27017/fitnessapp-two`
 const dbName = 'fitnessapp';
+const jsonToken = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto')
+const config = require('./config.js')
+
 
 let db;
 let client;
@@ -30,21 +27,28 @@ let connectToDb = async function() {
 module.exports = {
 	confirmCredentials: async(req, res) => {
 		try {
+			var token = req.headers['x-access-token'];
+	
+			jsonToken.verify(token, config.secret, function(err, decoded) {
+			  console.log(decoded);
+			  
+			});
 			let userData = {
 				user: req.body.username,
 				pass: req.body.password,
 			}
 			
 			let result = await matchUser(userData, db)
+			let passwordIsValid = bcrypt.compareSync(userData.pass, result[0].pass);
 			if(!result.length || !result) {
 				console.log('Username is:' + null);	
 				return {status: 'invalidEntry'}		
 			}
-			if(userData.user === result[0].user && userData.pass === result[0].pass) {
+			if(userData.user === result[0].user && passwordIsValid) {
 				console.log('USERNAME MATCHED');				  
 				return {name: result[0].user, status: 'successful', userProfile: result[0].profile}; 
 			}
-			if(userData.user === result[0].user && userData.pass !== result[0].pass) {
+			if(userData.user === result[0].user && !passwordIsValid) {
 				console.log('Invalid Entry');			
 				return {status: 'invalidEntry'}
 			}

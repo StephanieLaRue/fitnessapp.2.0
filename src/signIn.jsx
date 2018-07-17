@@ -44,7 +44,7 @@ class SignIn extends React.Component {
   }
 
   userSignIn(userData) {
-    let url = `${location.origin}/api/fitness/signin`;
+    let url = `${location.origin}/signin`;
     
     let params = {
       method: 'POST',
@@ -58,8 +58,7 @@ class SignIn extends React.Component {
     .then((res) => res.text())
     .then((data) => {
       if(data == 'successful') {
-        let origin = location.pathname.replace('/index.html', '/profile.html')
-        window.location.assign(`${origin}`)
+        window.location.assign('http://localhost:3000/profile')
       }
       if(data == 'invalidEntry') {
         console.log('invalid client entry');

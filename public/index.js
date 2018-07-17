@@ -163,7 +163,7 @@ function app() {
       }
     }
 
-    fetch(`${location.origin}/api/fitness/view`, params)
+    fetch(`${location.origin}/view`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.status === false) {
@@ -187,7 +187,7 @@ function app() {
       body: JSON.stringify(data)
     }
 
-    fetch(`${location.origin}/api/fitness/update`, params)
+    fetch(`${location.origin}/update`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.status === false) {
@@ -210,7 +210,7 @@ function app() {
       },
       body: JSON.stringify(data)
     }
-    fetch(`${location.origin}/api/fitness/remove`, params)
+    fetch(`${location.origin}/remove`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.status === false) {
