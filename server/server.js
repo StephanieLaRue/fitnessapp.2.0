@@ -24,9 +24,8 @@ app.post('/signin', async(req, res) => {
   if(result.name) {
     sessions.username = result.name;
     sessions.profile = result.userProfile
-    console.log('session user: ', sessions);
   }
-  res.send(result.status);
+  res.send({status: result.status, token: result.token});
 });
 
 app.get('/profile', function(req, res) {

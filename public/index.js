@@ -170,6 +170,8 @@ function app() {
         console.log('ADD SOME KIND OF ERROR');
         return;
       }
+      let getKey = localStorage.getItem('key')
+      
       workoutList = data;  
       generateList(data)
     })
