@@ -27,19 +27,10 @@ let connectToDb = async function() {
 module.exports = {
 	confirmCredentials: async(req, res) => {
 		try {
-			// var token = req.headers['x-access-token'];
-	
-			// jsonToken.verify(token, config.secret, function(err, decoded) {
-			//   console.log(decoded);
-			  
-			// });
-
-
 			const hash = crypto.createHmac('sha256', config.secret)
-      .update('I love cupcakes')
+      		.update('I love cupcakes')
 			.digest('hex');
 			
-
 			let userData = {
 				user: req.body.username,
 				pass: req.body.password,
@@ -56,10 +47,14 @@ module.exports = {
 			}
 			if(userData.user === result[0].user && passwordIsValid) {
 				console.log('USERNAME MATCHED');
+				
 				var token = jsonToken.sign({ id: result[0]._id}, hash, {
 					expiresIn: 86400 
 				});		  
-				return {name: result[0].user, status: 'successful', userProfile: result[0].profile, token: token}; 
+
+
+				console.log('u id', result[0]._id);
+				return {name: result[0].user, id: result[0]._id, status: 'successful', userProfile: result[0].profile, token: token}; 
 			}
 			if(userData.user === result[0].user && !passwordIsValid) {
 				console.log('Invalid Entry');			

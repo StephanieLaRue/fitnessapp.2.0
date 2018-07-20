@@ -10,12 +10,36 @@ const register = require('./registration');
 const session = require('express-session')
 let sessions;
 
+const jsonToken = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto')
+const config = require('./config.js')
+const hash = crypto.createHmac('sha256', config.secret)
+.update('I love cupcakes')
+.digest('hex');
+
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyparser.json());
 app.use(session({secret: 'userlogin'}))
 app.use(bodyparser.urlencoded({
   extended: true
 }));
+
+let id = ''
+
+app.get('/authVerify', function(req, res) {
+  let token = req.headers['x-access-token'];
+  if (!token)
+  return res.status(403).send({ auth: false, message: 'No token provided.' });
+
+  jsonToken.verify(token, hash, function(err, decoded) {
+    if (err)
+    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    if (id == decoded.id) {
+      res.send('Success')
+    }
+  })
+})
 
 
 app.post('/signin', async(req, res) => {
@@ -24,6 +48,7 @@ app.post('/signin', async(req, res) => {
   if(result.name) {
     sessions.username = result.name;
     sessions.profile = result.userProfile
+    id = result.id
   }
   res.send({status: result.status, token: result.token});
 });

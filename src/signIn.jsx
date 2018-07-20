@@ -33,6 +33,9 @@ class SignIn extends React.Component {
       }
     }
 
+    componentDidMount() {
+    }
+
   handleChange(eve) {
       this.setState({
         [eve.target.name]: eve.target.value
@@ -60,16 +63,15 @@ class SignIn extends React.Component {
     }
     fetch(url, params)
     .then((res) => res.json())
-    .then((data) => {
-      
+    .then((data) => {      
       if(data.status == 'successful') {
-        window.location.assign('http://localhost:3000/profile');       
+        window.location.assign('http://localhost:3000/profile');   
+        localStorage.setItem('key', JSON.stringify(data.token))       
       }
       if(data.status == 'invalidEntry') {
         console.log('invalid client entry');
         this.setState({invalidEntry: true})
-      }
-      localStorage.setItem(JSON.stringify('key', data.token))   
+      }              
     })
     .catch((err) => {return err});
   }

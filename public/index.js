@@ -18,10 +18,41 @@ function app() {
       alert('Selections cannot be left blank.')
       return;
     }
-      let data = makeObj()
-      makeReq(data)
-      resetSelectors()
+    verifyAuth()
   }
+
+  function verifyAuth() {
+    const query = new URLSearchParams(location.search)
+    let token = query.get('key')
+
+    if(token) {
+      localStorage.setItem('key', JSON.stringify(data.token))  
+    }
+    else {
+      token = JSON.parse(localStorage.getItem('key'))      
+    }
+
+    if(token) {
+      const headers = new Headers({
+        'x-access-token': token
+      })
+
+      const reqOpts = {
+        method: 'GET',
+        headers: headers
+      }
+
+      fetch('/authVerify', reqOpts)
+      .then(res => res.text())
+      .then(result => {
+          let data = makeObj()
+          makeReq(data)
+          resetSelectors()
+      })
+      .catch(error => console.error('Error GETTING Data:', error))
+
+    }
+}
 
   function makeObj() {
     let work = document.getElementById('workout');
@@ -169,9 +200,7 @@ function app() {
       if(data.status === false) {
         console.log('ADD SOME KIND OF ERROR');
         return;
-      }
-      let getKey = localStorage.getItem('key')
-      
+      }  
       workoutList = data;  
       generateList(data)
     })
@@ -227,3 +256,5 @@ function app() {
 }
 
 app()
+
+
