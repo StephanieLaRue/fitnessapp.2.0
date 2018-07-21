@@ -14,11 +14,6 @@ function CheckEntry(props) {
   ) 
 }
 
-function storeKey() {
-
-}
-
-
 class SignIn extends React.Component {
   constructor(props) {
       super(props)
@@ -47,6 +42,7 @@ class SignIn extends React.Component {
       username: this.state.username,
       password: this.state.password
     } 
+    
     this.userSignIn(userData)
   }
 
@@ -64,14 +60,9 @@ class SignIn extends React.Component {
     fetch(url, params)
     .then((res) => res.json())
     .then((data) => {      
-      if(data.status == 'successful') {
         window.location.assign('http://localhost:3000/profile');   
         localStorage.setItem('key', JSON.stringify(data.token))       
-      }
-      if(data.status == 'invalidEntry') {
-        console.log('invalid client entry');
-        this.setState({invalidEntry: true})
-      }              
+        this.setState({invalidEntry: data.status})            
     })
     .catch((err) => {return err});
   }

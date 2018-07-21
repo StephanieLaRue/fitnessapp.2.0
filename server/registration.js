@@ -65,19 +65,8 @@ const insertDocs = async function(body, db) {
 
     let result = await db.collection('registeredusers').insert(newUser)
     console.log('DATA INSERTED')
-
-    // console.log("id:", result.ops[0]._id)
     let token = jsonToken.sign({ id: result.ops[0]._id}, hash, {expiresIn: 86400});
-    // console.log('token', token);
-    // create authentication/verification function to verify username and token match a specific user
-    // return token and username to client upon registration & login
-    // on the client side: send the token and username up for every client request
-    // make sure not to return password to client/not stored on client side
 
-    // Use decode to verify username and pass
-    var decode = jsonToken.decode(token);
-    // console.log('decode', decode);
-    
     return {result, token};
   }
   catch(err) {

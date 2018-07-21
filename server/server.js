@@ -8,6 +8,7 @@ const fitness = require('./mongo.js');
 const confirmSignIn = require('./confirmSignIn');
 const register = require('./registration');
 const session = require('express-session')
+const auth = require('./verifyAuth.js')
 let sessions;
 
 const jsonToken = require('jsonwebtoken');
@@ -25,24 +26,19 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
-let id = ''
+let id = '';
+let token = ''
 
-app.get('/authVerify', function(req, res) {
-  let token = req.headers['x-access-token'];
-  if (!token)
-  return res.status(403).send({ auth: false, message: 'No token provided.' });
-
-  jsonToken.verify(token, hash, function(err, decoded) {
-    if (err)
-    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    if (id == decoded.id) {
-      res.send('Success')
-    }
-  })
+app.get('/authVerify', async(req, res) => {
+  let verifyToken = await auth.authorizeToken(req, res);
+  token = verifyToken
+  if(!token) {return}
+  res.send('success') 
 })
 
 
 app.post('/signin', async(req, res) => {
+  // if(!token) {return}
   sessions = req.session;
   let result = await confirmSignIn.confirmCredentials(req, res)
   if(result.name) {
@@ -50,7 +46,13 @@ app.post('/signin', async(req, res) => {
     sessions.profile = result.userProfile
     id = result.id
   }
-  res.send({status: result.status, token: result.token});
+  if(result.status == 'successful') {
+    res.send({name: result.name, token: result.token, status: false});
+  }
+  if(result.status == 'invalidEntry') {
+    res.send({status: true})
+  }
+  
 });
 
 app.get('/profile', function(req, res) {
@@ -64,14 +66,15 @@ app.get('/profile', function(req, res) {
 
 // curl -X 'POST' -d 'newUsername=abc123&newPassword=abc123' 'localhost:3000/register'
 app.post('/register', async(req, res) => {
+  // if(!token) {return}
   let result = await register.registration(req, res)
-  console.log(result.status);
   result = result.status;
   res.send(result);
 });
 
 
 app.get('/view', function(req, res) {
+  if(!token) {return}
   let body = sessions.username;
   req.body = body;
   fitness.view(req, res)
@@ -79,11 +82,13 @@ app.get('/view', function(req, res) {
 
 
 app.post('/update', async(req, res) => {
-  let result = await fitness.update(req, res)  
+  if(!token) {return}
+  let result = await fitness.update(req, res) 
   res.send(result)
 });
 
 app.post('/remove', async(req, res) => {
+  if(!token) {return}
   let result = await fitness.remove(req, res); 
   res.send(result)
 });

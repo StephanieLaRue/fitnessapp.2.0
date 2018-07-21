@@ -30,15 +30,15 @@ module.exports = {
   update: async function(req, res) {
     try {
       let body = req.body;
-      let result = await updateDocs(body, db);
-
+      await updateDocs(body, db);
       let data = await asyncgetData({user: user.user}, db);
       user = data[0];
       let userProfile = user.profile;
-
-      res.set('Content-Type', 'application/json')
-      let json = JSON.stringify(userProfile)
-      res.send(json)
+      let userData = {
+        profile: userProfile,
+        userName: user.user
+      }
+      return userData;
     }
     catch(err) {
       console.log("ERR:", err);

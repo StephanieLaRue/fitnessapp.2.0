@@ -38,9 +38,7 @@ module.exports = {
 
 			let result = await matchUser(userData, db)
 			let passwordIsValid = bcrypt.compareSync(userData.pass, result[0].pass);
-			console.log(passwordIsValid);
-			
-			
+
 			if(!result.length || !result) {
 				console.log('Username is:' + null);	
 				return {status: 'invalidEntry'}		
@@ -51,9 +49,6 @@ module.exports = {
 				var token = jsonToken.sign({ id: result[0]._id}, hash, {
 					expiresIn: 86400 
 				});		  
-
-
-				console.log('u id', result[0]._id);
 				return {name: result[0].user, id: result[0]._id, status: 'successful', userProfile: result[0].profile, token: token}; 
 			}
 			if(userData.user === result[0].user && !passwordIsValid) {

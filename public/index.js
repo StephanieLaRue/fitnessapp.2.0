@@ -18,41 +18,10 @@ function app() {
       alert('Selections cannot be left blank.')
       return;
     }
-    verifyAuth()
+    let data = makeObj()
+    makeReq(data)
+    resetSelectors()
   }
-
-  function verifyAuth() {
-    const query = new URLSearchParams(location.search)
-    let token = query.get('key')
-
-    if(token) {
-      localStorage.setItem('key', JSON.stringify(data.token))  
-    }
-    else {
-      token = JSON.parse(localStorage.getItem('key'))      
-    }
-
-    if(token) {
-      const headers = new Headers({
-        'x-access-token': token
-      })
-
-      const reqOpts = {
-        method: 'GET',
-        headers: headers
-      }
-
-      fetch('/authVerify', reqOpts)
-      .then(res => res.text())
-      .then(result => {
-          let data = makeObj()
-          makeReq(data)
-          resetSelectors()
-      })
-      .catch(error => console.error('Error GETTING Data:', error))
-
-    }
-}
 
   function makeObj() {
     let work = document.getElementById('workout');
@@ -180,12 +149,11 @@ function app() {
         li.parentNode.removeChild(li);
       }
     })
-
-
   }
 
 
   window.onload = function() {
+    verifyAuth()
     let params = {
       method: 'get',
       headers: {
@@ -208,7 +176,7 @@ function app() {
   }
 
   function makeReq(data) {
-    
+    verifyAuth()
     let params = {
       method: 'post',
       headers: {
@@ -221,18 +189,16 @@ function app() {
     fetch(`${location.origin}/update`, params)
     .then(res => res.json())
     .then(function(data) {
-      if(data.status === false) {
-        console.log('ADD SOME KIND OF ERROR');
-        return;
-      }
-      workoutList = data;  
-      addListItem(data)
+      workoutList = data.profile;  
+      addListItem(data.profile)
+      user(data.userName)
     })
     .catch(error => console.error('Error POSTING Data:', error))
   }
 
 
   function removeListItems(data) {
+    verifyAuth()
     let params = {
       method: 'post',
       headers: {
@@ -258,3 +224,40 @@ function app() {
 app()
 
 
+function verifyAuth() {
+  const query = new URLSearchParams(location.search)
+  let token = query.get('key')
+  let user = query.get('userName')
+
+  if(token) {
+    localStorage.setItem('key', JSON.stringify(data.token))  
+    // localStorage.setItem('userName', JSON.stringify(data.token))  
+  }
+  else {
+    token = JSON.parse(localStorage.getItem('key')) 
+    user = JSON.parse(localStorage.getItem('userName'))      
+  }
+
+  if(token) {
+    const headers = new Headers({
+    'x-access-token': token
+    })
+
+    const reqOpts = {
+    method: 'POST',
+    headers: headers
+    }
+
+    fetch('/authVerify', reqOpts)
+    .then(res => res.text())
+    .then(result => {
+
+    })
+    .catch(error => console.error('Error GETTING Data:', error))
+
+  }
+}
+
+function user(user) {
+  localStorage.setItem('userName', JSON.stringify(user))  
+}
