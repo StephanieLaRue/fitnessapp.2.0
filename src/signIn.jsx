@@ -61,7 +61,8 @@ class SignIn extends React.Component {
     .then((res) => res.json())
     .then((data) => {      
         window.location.assign('http://localhost:3000/profile');   
-        localStorage.setItem('key', JSON.stringify(data.token))       
+        localStorage.setItem('key', JSON.stringify(data.token))
+        localStorage.setItem('userName', JSON.stringify(data.name))        
         this.setState({invalidEntry: data.status})            
     })
     .catch((err) => {return err});

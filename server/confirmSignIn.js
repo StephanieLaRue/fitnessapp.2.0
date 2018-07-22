@@ -69,7 +69,6 @@ module.exports = {
 const matchUser = async function(userData, db) {
 	try {
 		let result = await db.collection('registeredusers').find({user: userData.user}).toArray();
-		console.log('matchUser result:', result);
 		return result;
 	}
 	catch(err) {

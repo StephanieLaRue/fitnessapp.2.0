@@ -64,7 +64,7 @@ const insertDocs = async function(body, db) {
     }
 
     let result = await db.collection('registeredusers').insert(newUser)
-    console.log('DATA INSERTED')
+    console.log('USER IS REGISTERED')
     let token = jsonToken.sign({ id: result.ops[0]._id}, hash, {expiresIn: 86400});
 
     return {result, token};

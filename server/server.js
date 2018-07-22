@@ -9,15 +9,8 @@ const confirmSignIn = require('./confirmSignIn');
 const register = require('./registration');
 const session = require('express-session')
 const auth = require('./verifyAuth.js')
+const verify = require('./storedData.js')
 let sessions;
-
-const jsonToken = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto')
-const config = require('./config.js')
-const hash = crypto.createHmac('sha256', config.secret)
-.update('I love cupcakes')
-.digest('hex');
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyparser.json());
@@ -26,10 +19,9 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
-let id = '';
-let token = ''
+let token = '';
 
-app.get('/authVerify', async(req, res) => {
+app.post('/authVerify', async(req, res) => {  
   let verifyToken = await auth.authorizeToken(req, res);
   token = verifyToken
   if(!token) {return}
@@ -38,7 +30,6 @@ app.get('/authVerify', async(req, res) => {
 
 
 app.post('/signin', async(req, res) => {
-  // if(!token) {return}
   sessions = req.session;
   let result = await confirmSignIn.confirmCredentials(req, res)
   if(result.name) {
@@ -66,7 +57,6 @@ app.get('/profile', function(req, res) {
 
 // curl -X 'POST' -d 'newUsername=abc123&newPassword=abc123' 'localhost:3000/register'
 app.post('/register', async(req, res) => {
-  // if(!token) {return}
   let result = await register.registration(req, res)
   result = result.status;
   res.send(result);
@@ -74,7 +64,6 @@ app.post('/register', async(req, res) => {
 
 
 app.get('/view', function(req, res) {
-  if(!token) {return}
   let body = sessions.username;
   req.body = body;
   fitness.view(req, res)
@@ -82,13 +71,11 @@ app.get('/view', function(req, res) {
 
 
 app.post('/update', async(req, res) => {
-  if(!token) {return}
   let result = await fitness.update(req, res) 
   res.send(result)
 });
 
 app.post('/remove', async(req, res) => {
-  if(!token) {return}
   let result = await fitness.remove(req, res); 
   res.send(result)
 });
