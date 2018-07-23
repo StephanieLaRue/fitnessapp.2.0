@@ -167,10 +167,9 @@ function app() {
     fetch(`${location.origin}/view`, params)
     .then(res => res.json())
     .then(function(data) {
-      if(data.status === false) {
-        console.log('ADD SOME KIND OF ERROR');
+      if(data.auth == false) {
         return;
-      }  
+      }
       workoutList = data;  
       generateList(data)
     })
@@ -193,9 +192,11 @@ function app() {
     fetch(`${location.origin}/update`, params)
     .then(res => res.json())
     .then(function(data) {
+      if(data.auth == false) {
+        return;
+      }
       workoutList = data.profile;  
       addListItem(data.profile)
-      user(data.userName)
     })
     .catch(error => console.error('Error POSTING Data:', error))
   }
@@ -216,10 +217,10 @@ function app() {
     fetch(`${location.origin}/remove`, params)
     .then(res => res.json())
     .then(function(data) {
-      if(data.status === false) {
-        console.log('ADD SOME KIND OF ERROR');
+      if(data.auth == false) {
         return;
       }
+      workoutList = data;  
     })
     .catch(error => console.error('Error REMOVING Data:', error))
   }

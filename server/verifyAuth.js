@@ -35,15 +35,7 @@ module.exports = {
         try {
             let token = req.headers['x-access-token'];
             let user = req.headers['x-access-user'];
-            console.log('a t', token);
-            
-            if (!user) {
-                // res.status(404).send("No user found.");
-                return false;
-            }
-            
-            if (!token) {
-                // res.status(403).send({ auth: false, message: 'No token provided.' });
+            if (!user || !token) {
                 return false;
             }
 
