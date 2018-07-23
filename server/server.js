@@ -9,7 +9,6 @@ const confirmSignIn = require('./confirmSignIn');
 const register = require('./registration');
 const session = require('express-session')
 const auth = require('./verifyAuth.js')
-const verify = require('./storedData.js')
 let sessions;
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -18,15 +17,6 @@ app.use(session({secret: 'userlogin'}))
 app.use(bodyparser.urlencoded({
   extended: true
 }));
-
-let token = '';
-
-app.post('/authVerify', async(req, res) => {  
-  let verifyToken = await auth.authorizeToken(req, res);
-  token = verifyToken
-  if(!token) {return}
-  res.send('success') 
-})
 
 
 app.post('/signin', async(req, res) => {
@@ -63,7 +53,11 @@ app.post('/register', async(req, res) => {
 });
 
 
-app.get('/view', function(req, res) {
+app.get('/view', async(req, res) => {
+  let verifyToken = await auth.authorizeToken(req, res);
+  if(!verifyToken){
+    return res.status(403).send({ auth: false, message: 'Token Invalid.' });
+  }
   let body = sessions.username;
   req.body = body;
   fitness.view(req, res)
@@ -71,11 +65,19 @@ app.get('/view', function(req, res) {
 
 
 app.post('/update', async(req, res) => {
+  let verifyToken = await auth.authorizeToken(req, res);
+  if(!verifyToken){
+    return res.status(403).send({ auth: false, message: 'Token Invalid.' });
+  }
   let result = await fitness.update(req, res) 
   res.send(result)
 });
 
 app.post('/remove', async(req, res) => {
+  let verifyToken = await auth.authorizeToken(req, res);
+  if(!verifyToken){
+    return res.status(403).send({ auth: false, message: 'Token Invalid.' });
+  }
   let result = await fitness.remove(req, res); 
   res.send(result)
 });

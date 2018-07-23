@@ -34,19 +34,22 @@ module.exports = {
     authorizeToken: async(req, res) => {
         try {
             let token = req.headers['x-access-token'];
-            let user = req.body.user;
-            if (!user) 
-            return res.status(404).send("No user found.");
-            if (!token)
-            return res.status(403).send({ auth: false, message: 'No token provided.' });
+            let user = req.headers['x-access-user'];
+            console.log('a t', token);
+            
+            if (!user) {
+                // res.status(404).send("No user found.");
+                return false;
+            }
+            
+            if (!token) {
+                // res.status(403).send({ auth: false, message: 'No token provided.' });
+                return false;
+            }
 
             let findUser = await matchUser(user, db)
             let result = await checkToken(token)
-            if(result == findUser[0]._id) {
-                return true
-            }
-            else {return false}
-            
+            return result == findUser[0]._id;
         }
         catch(err) {
             console.log(err.stack);

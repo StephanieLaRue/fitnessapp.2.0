@@ -153,9 +153,12 @@ function app() {
 
 
   window.onload = function() {
+    let auth = verifyAuth()
     let params = {
       method: 'get',
       headers: {
+        'x-access-token': auth.token,
+        'x-access-user': auth.user,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
@@ -175,9 +178,12 @@ function app() {
   }
 
   function makeReq(data) {
+    let auth = verifyAuth()
     let params = {
       method: 'post',
       headers: {
+        'x-access-token': auth.token,
+        'x-access-user': auth.user,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
@@ -196,9 +202,12 @@ function app() {
 
 
   function removeListItems(data) {
+    let auth = verifyAuth()
     let params = {
       method: 'post',
       headers: {
+        'x-access-token': auth.token,
+        'x-access-user': auth.user,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
@@ -220,44 +229,13 @@ function app() {
 app()
 
 
-// function verifyAuth() {
-//   const query = new URLSearchParams(location.search)
-//   let token = query.get('key')
-//   let user = query.get('userName')
-
-//   if(token) {
-//     localStorage.setItem('key', JSON.stringify(data.token))  
-//     localStorage.setItem('userName', JSON.stringify(data.user))  
-//   }
-//   else {
-//     token = JSON.parse(localStorage.getItem('key')) 
-//     user = JSON.parse(localStorage.getItem('userName'))      
-//   }
-
-//   if(token) {
-//     const headers = new Headers({
-//     'x-access-token': token,
-//     'Content-Type': 'application/json'
-//     })
-
-//     const reqOpts = {
-//     method: 'post',
-//     headers: headers,
-//     body: JSON.stringify({user: user})
-//     }
-
-//     console.log(reqOpts);
-    
-    
-//     fetch('/authVerify', reqOpts)
-//     .then(res => res.text())
-//     .then(result => {
-
-//     })
-//     .catch(error => console.error('Error GETTING Data:', error))
-
-//   }
-// }
+function verifyAuth() {
+  let token = localStorage.getItem('key')
+  let userName = localStorage.getItem('userName')
+  token = token ? JSON.parse(token) : '' ;
+  userName = userName ? JSON.parse(userName) : '';   
+ return {token: token, user: userName}
+}
 
 function user(user) {
   localStorage.setItem('userName', JSON.stringify(user))  
