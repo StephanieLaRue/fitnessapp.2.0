@@ -33,7 +33,7 @@ module.exports = {
       let body = req.body;
 
       let checkUserList = await findUsers(body, db)
-      if(checkUserList === 'true') {
+      if(checkUserList === true) {
         return {status: 'userexists'}
       }
 
@@ -83,10 +83,9 @@ const findUsers = async function(data, db) {
     let match;
     result.forEach((ele) => {
       if(data.newUsername === ele.user) {
-        match = 'true';  
+        match = true;  
       }
     })
-		console.log('matchedUser result:', match);
 		return match;
 	}
 	catch(err) {

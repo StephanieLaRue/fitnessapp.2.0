@@ -11,10 +11,10 @@ function app() {
     let workLen = document.getElementById('workoutLength')
     let length = workLen.options[workLen.selectedIndex].value
 
-    let daySelect = document.getElementById('days')
-    let days = daySelect.options[daySelect.selectedIndex].value
+    // let daySelect = document.getElementById('days')
+    // let days = daySelect.options[daySelect.selectedIndex].value
 
-    if(workSelect == 0 || length == 0 || days == 0) {
+    if(workSelect == 0 || length == 0) {
       alert('Selections cannot be left blank.')
       return;
     }
@@ -30,13 +30,13 @@ function app() {
     let workLen = document.getElementById('workoutLength');
     let length = workLen.options[workLen.selectedIndex].value;
 
-    let daySelect = document.getElementById('days')
-    let days = daySelect.options[daySelect.selectedIndex].value
+    // let daySelect = document.getElementById('days')
+    // let days = daySelect.options[daySelect.selectedIndex].value
 
     let date = createDate()
 
     let obj = {
-      day: days,
+      // day: days,
       date: date,    
       workout: workSelect,
       length: length,
@@ -65,16 +65,16 @@ function app() {
   function resetSelectors() {
     let resetListOne = document.querySelectorAll('#workout option')
     let resetListTwo = document.querySelectorAll('#workoutLength option')
-    let resetDay = document.querySelectorAll('#days option')
+    // let resetDay = document.querySelectorAll('#days option')
     for (var ind = 0; ind < resetListOne.length; ind++) {
       resetListOne[ind].selected = resetListOne[ind].defaultSelected;
     }
     for (var ind = 0; ind < resetListTwo.length; ind++) {
       resetListTwo[ind].selected = resetListTwo[ind].defaultSelected;
     }
-    for (var ind = 0; ind < resetDay.length; ind++) {
-      resetDay[ind].selected = resetDay[ind].defaultSelected;
-    }
+    // for (var ind = 0; ind < resetDay.length; ind++) {
+    //   resetDay[ind].selected = resetDay[ind].defaultSelected;
+    // }
   }
 
 
@@ -97,7 +97,7 @@ function app() {
         let val = document.createTextNode(item)
         span.id = 'span'
         prop === 'date' ? span.id = 'propDate' : "";
-        prop === 'day' ? span.id = 'propDay' : "";
+        // prop === 'day' ? span.id = 'propDay' : "";
         prop === 'workout' ? span.id = 'propWorkout' : "";
         prop === 'length' ? span.id = 'propLen' : "";
         span.appendChild(val)
@@ -130,7 +130,7 @@ function app() {
       let val = document.createTextNode(item)
       span.id = 'span'
       prop === 'date' ? span.id = 'propDate' : "";
-      prop === 'day' ? span.id = 'propDay' : "";
+      // prop === 'day' ? span.id = 'propDay' : "";
       prop === 'workout' ? span.id = 'propWorkout' : "";
       prop === 'length' ? span.id = 'propLen' : "";
       span.appendChild(val)

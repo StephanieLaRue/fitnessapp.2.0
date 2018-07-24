@@ -42,7 +42,7 @@ class Main extends React.Component {
 	render() {
 		return(
 			<div>
-			<h1 className="title" >Fitness Tracker</h1>
+			<p className="title">Fitness Tracker</p>
 			<Container id="mainContainer">
 				<Button className="toggleButton btn-outline-info btn-sm" onClick={this.toggle}>
 					{this.state.toggleClick ? 'Sign In' : 'Register'}
