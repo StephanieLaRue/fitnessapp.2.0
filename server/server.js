@@ -58,8 +58,7 @@ app.get('/view', async(req, res) => {
   if(!verifyToken){
     return res.status(403).send({ auth: false, message: 'Token Invalid.' });
   }
-  let body = sessions.username;
-  req.body = body;
+  req.body = sessions.username;
   fitness.view(req, res)
 })
 

@@ -18,8 +18,8 @@ function app() {
       alert('Selections cannot be left blank.')
       return;
     }
-    let data = makeObj()
-    makeReq(data)
+    let jsonObj = makeObj()
+    makeReq(jsonObj)
     resetSelectors()
   }
 
@@ -80,6 +80,7 @@ function app() {
 
   function generateList(data) {
     let ul = document.getElementById('dataList');
+    ul.innerHTML = ""
 
     data.forEach(function(ele, ind) {
       let li = document.createElement('li');
@@ -104,7 +105,6 @@ function app() {
       }
 
       ul.appendChild(li)
-      li.className = 'listItem'
       li.className = "list-group-item"
 
       rem.onclick = function() {
@@ -115,18 +115,17 @@ function app() {
     })
   }
 
-  function addListItem(data) {
-    data = data[data.length -1]
+  function addListItem(jsonObj) {
     let ul = document.getElementById('dataList');
     let li = document.createElement('li');
-      let rem = document.createElement('button')
-      let t = document.createTextNode('x')
-      rem.appendChild(t)
-      li.appendChild(rem)
-      rem.className = "remButton";
+    let rem = document.createElement('button')
+    let t = document.createTextNode('x')
+    rem.appendChild(t)
+    li.appendChild(rem)
+    rem.className = "remButton";
 
-    for(let prop in data) {
-      let item = data[prop]
+    for(let prop in jsonObj) {
+      let item = jsonObj[prop]
       let span = document.createElement('span')
       let val = document.createTextNode(item)
       span.id = 'span'
@@ -138,17 +137,16 @@ function app() {
       li.appendChild(span)
     }
 
-      ul.appendChild(li)
-      li.className = 'listItem';
-      li.className = "list-group-item";
+    ul.appendChild(li)
+    li.className = "list-group-item";
       
-    workoutList.forEach((ele, ind) => {
-      rem.onclick = function() {
-        workoutList.splice(ind, 1)
-        removeListItems(workoutList)
-        li.parentNode.removeChild(li);
-      }
-    })
+    workoutList.push(jsonObj)
+    let lastIndex = workoutList.length-1
+    rem.onclick = function() {
+      workoutList.splice(lastIndex, 1)
+      removeListItems(workoutList)
+      li.parentNode.removeChild(li);
+    }
   }
 
 
@@ -163,7 +161,6 @@ function app() {
         'Content-Type': 'application/json'
       }
     }
-
     fetch(`${location.origin}/view`, params)
     .then(res => res.json())
     .then(function(data) {
@@ -176,7 +173,7 @@ function app() {
     .catch(error => console.error('Error GETTING Data:', error))
   }
 
-  function makeReq(data) {
+  function makeReq(jsonObj) {
     let auth = verifyAuth()
     let params = {
       method: 'post',
@@ -186,7 +183,7 @@ function app() {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(jsonObj)
     }
 
     fetch(`${location.origin}/update`, params)
@@ -195,14 +192,13 @@ function app() {
       if(data.auth == false) {
         return;
       }
-      workoutList = data.profile;  
-      addListItem(data.profile)
+      addListItem(jsonObj)
     })
     .catch(error => console.error('Error POSTING Data:', error))
   }
 
 
-  function removeListItems(data) {
+  function removeListItems(list) {
     let auth = verifyAuth()
     let params = {
       method: 'post',
@@ -212,7 +208,7 @@ function app() {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(list)
     }
     fetch(`${location.origin}/remove`, params)
     .then(res => res.json())
@@ -221,6 +217,7 @@ function app() {
         return;
       }
       workoutList = data;  
+      generateList(data)
     })
     .catch(error => console.error('Error REMOVING Data:', error))
   }

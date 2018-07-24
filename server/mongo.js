@@ -33,7 +33,8 @@ module.exports = {
       await updateDocs(body, db);
       let data = await asyncgetData({user: user.user}, db);
       user = data[0];
-      let userProfile = user.profile;
+      let userProfile = user.profile;  
+      userProfile = userProfile.slice(-1)[0];
       let userData = {
         profile: userProfile,
         userName: user.user
@@ -48,10 +49,11 @@ module.exports = {
   view: async function(req, res) {
     try {
       let query = {user: req.body};
+      
       let data = await asyncgetData(query, db);
       user = data[0];
       let userProfile = user.profile
-      
+
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(userProfile)
       res.send(json)
@@ -65,7 +67,7 @@ module.exports = {
   remove: async function(req, res) {
     let body = req.body;
     try {
-      let result = await removeData(body, db)   
+      await removeData(body, db)   
       let data = await asyncgetData({user: user.user}, db);
       
       user = data[0];
@@ -73,7 +75,8 @@ module.exports = {
 
       res.set('Content-Type', 'application/json')
       let json = JSON.stringify(userProfile)
-      res.send(json)
+      // res.send(json)
+      return json
     }
     catch(err) {
       console.log("ERR:", err);
@@ -97,6 +100,8 @@ const asyncgetData = async function(query, db) {
 const updateDocs = async function(data, db) {
   try {
     let result = await db.collection('registeredusers').findOneAndUpdate(user, {$addToSet: {"profile": data}} )
+      console.log(result);
+      
     return result;
   }
   catch(err) {
@@ -108,9 +113,8 @@ const updateDocs = async function(data, db) {
 
 const removeData = async function(data, db) {
   try {
-    let result = await db.collection('registeredusers').findOneAndUpdate(user, {$set: {"profile": data} })
-    console.log('NEW OBJECT: ', result);
-    return result;
+    await db.collection('registeredusers').findOneAndUpdate(user, {$set: {"profile": data} })
+    console.log('Removed data');
   }
   catch(err) {
     console.log('Error removing collection...');
