@@ -47,7 +47,7 @@ class SignIn extends React.Component {
   }
 
   userSignIn(userData) {
-    let url = `${location.origin}/signin`;
+    let url = `${location.origin}/api/fitness/signin`;
     
     let params = {
       method: 'POST',
@@ -60,7 +60,8 @@ class SignIn extends React.Component {
     fetch(url, params)
     .then((res) => res.json())
     .then((data) => {      
-        window.location.assign('http://localhost:3000/profile');   
+        let origin = location.pathname.replace('/index.html', '/profile.html')
+        window.location.assign(`${origin}`) 
         localStorage.setItem('key', JSON.stringify(data.token))
         localStorage.setItem('userName', JSON.stringify(data.name))        
         this.setState({invalidEntry: data.status})            

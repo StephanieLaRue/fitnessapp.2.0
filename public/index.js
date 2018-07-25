@@ -161,7 +161,7 @@ function app() {
         'Content-Type': 'application/json'
       }
     }
-    fetch(`${location.origin}/view`, params)
+    fetch(`${location.origin}/api/fitness/view`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.auth == false) {
@@ -186,7 +186,7 @@ function app() {
       body: JSON.stringify(jsonObj)
     }
 
-    fetch(`${location.origin}/update`, params)
+    fetch(`${location.origin}/api/fitness/update`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.auth == false) {
@@ -210,7 +210,7 @@ function app() {
       },
       body: JSON.stringify(list)
     }
-    fetch(`${location.origin}/remove`, params)
+    fetch(`${location.origin}/api/fitness/remove`, params)
     .then(res => res.json())
     .then(function(data) {
       if(data.auth == false) {

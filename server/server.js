@@ -19,7 +19,7 @@ app.use(bodyparser.urlencoded({
 }));
 
 
-app.post('/signin', async(req, res) => {
+app.post('/api/fitness/signin', async(req, res) => {
   sessions = req.session;
   let result = await confirmSignIn.confirmCredentials(req, res)
   if(result.name) {
@@ -36,7 +36,7 @@ app.post('/signin', async(req, res) => {
   
 });
 
-app.get('/profile', function(req, res) {
+app.get('/api/fitness/profile', function(req, res) {
   if(sessions && sessions.username) {
     res.sendFile(path.join(__dirname, '../public', 'profile.html'))   
   }
@@ -46,14 +46,14 @@ app.get('/profile', function(req, res) {
 })
 
 // curl -X 'POST' -d 'newUsername=abc123&newPassword=abc123' 'localhost:3000/register'
-app.post('/register', async(req, res) => {
+app.post('/api/fitness/register', async(req, res) => {
   let result = await register.registration(req, res)
   result = result.status;
   res.send(result);
 });
 
 
-app.get('/view', async(req, res) => {
+app.get('/api/fitness/view', async(req, res) => {
   let verifyToken = await auth.authorizeToken(req, res);
   if(!verifyToken){
     return res.status(403).send({ auth: false, message: 'Token Invalid.' });
@@ -63,7 +63,7 @@ app.get('/view', async(req, res) => {
 })
 
 
-app.post('/update', async(req, res) => {
+app.post('/api/fitness/update', async(req, res) => {
   let verifyToken = await auth.authorizeToken(req, res);
   if(!verifyToken){
     return res.status(403).send({ auth: false, message: 'Token Invalid.' });
@@ -72,7 +72,7 @@ app.post('/update', async(req, res) => {
   res.send(result)
 });
 
-app.post('/remove', async(req, res) => {
+app.post('/api/fitness/remove', async(req, res) => {
   let verifyToken = await auth.authorizeToken(req, res);
   if(!verifyToken){
     return res.status(403).send({ auth: false, message: 'Token Invalid.' });
